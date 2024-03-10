@@ -1,0 +1,23 @@
+[tool.ruff]
+line-length = 80
+lint.select = ["E", "F", "I"]
+exclude = [
+    ".git",
+    ".ruff_cache",
+    ".venv",
+    ".env",
+    "venv",
+    "env",
+    "migrations",
+    "infra",
+    "docs",
+    ".vscode",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"*/config.py" = ["E501"]
+"*/text.py" = ["E501"]
+
+[tool.ruff.lint.isort]
+combine-as-imports = true
+known-local-folder = ["bot", "handlers", "data", "db", "kb", "repo"]  # Здесь указывать название локального модуля, для корректной сортировки импортов ["my_module"]

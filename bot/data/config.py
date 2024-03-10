@@ -1,6 +1,5 @@
 import os
 
-
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -12,3 +11,4 @@ POSTGRES_USER = os.getenv("POSTGRES_USER")
 POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD")
 POSTGRES_DBNAME = os.getenv("POSTGRES_DBNAME")
 NUM = os.getenv("NUM")
+URL = os.getenv('URL')
