@@ -9,6 +9,7 @@ from aiogram.types import Message
 from app import bot
 from sqlalchemy.exc import SQLAlchemyError
 
+#from sqlalchemy.ext.asyncio import AsyncSession
 from data import config, text
 from db.models import Request
 from kb import kb
@@ -41,8 +42,7 @@ async def get_article_number(callback: types.CallbackQuery, state: FSMContext):
 async def handle_article_number(msg: Message, state: FSMContext):
     try:
         number = msg.text
-        if not number.isdigit() or len(number) > 20:
-            raise ValueError("Неверный формат артикула товара")
+        validate_article_number(number)
         await state.update_data(article_number=number)
         repository = RequestRepository(Request)
         await repository.create(
@@ -59,8 +59,12 @@ async def handle_article_number(msg: Message, state: FSMContext):
             "Некорректный формат артикула. Введите корректный артикул."
         )
 
+def validate_article_number(number):
+    if not number.isdigit() or len(number) > 20:
+        raise ValueError("Неверный формат артикула товара")
+
 async def parse_info(msg: Message, article_number: str):
-    url = f"{config.URL}={article_number}"
+    url = f"https://card.wb.ru/cards/v1/detail?appType=1&curr=rub&dest=-1257786&spp=30&nm={article_number}" # noqa: E501
     try:
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as response:
@@ -73,10 +77,12 @@ async def parse_info(msg: Message, article_number: str):
                         await msg.answer(
                             "Товар с таким артикулом не найден на WB"
                         )
-    except Exception:
-        await msg.answer(
-            text="Произошла непредвиденная ошибка. Попробуйте еще раз."
-        )
+                else:
+                     await msg.answer(
+                         "Ошибка при получении данных: {response.status}")
+    except Exception as e:
+        await msg.answer(f"Ошибка: {str(e)}")
+
 
 async def send_product_info(msg: Message, product_info):
     product_name = product_info.get("name")
@@ -172,7 +178,7 @@ async def check_and_send_info():
             )
 
 async def get_product_info(product_article):
-    url = f"{config.URL}={product_article}"
+    url = f"https://card.wb.ru/cards/v1/detail?appType=1&curr=rub&dest=-1257786&spp=30&nm={product_article}" # noqa: E501
     async with aiohttp.ClientSession() as session:
         async with session.get(url) as response:
             if response.status == 200:
