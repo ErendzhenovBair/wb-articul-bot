@@ -1,11 +1,9 @@
 FROM python:3.10-slim
 
-COPY requirements.txt .
-
-COPY . /bot/
-
 WORKDIR /bot
+
+RUN python -m pip install --upgrade pip
 
 RUN pip install -r requirements.txt
 
-ENTRYPOINT python app.py
+CMD ["python", "app.py"]
