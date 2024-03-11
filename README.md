@@ -19,12 +19,14 @@
 [![SQLAlchemy](https://img.shields.io/badge/-SQLAlchemy-464646?style=flat-square&logo=sqlalchemy)](https://www.sqlalchemy.org/)
 [![PostgreSQL](https://img.shields.io/badge/-PostgreSQL-464646?style=flat-square&logo=postgresql)](https://www.postgresql.org/)
 [![aioschedule](https://img.shields.io/badge/-aioschedule-464646?style=flat-square&logo=python)](https://github.com/ChadSikorra/aioschedule)
+[![aioschedule](https://img.shields.io/badge/-aioschedule-464646?style=flat-square&logo=python)](https://github.com/ChadSikorra/aioschedule)
 
 - Python 3.10.12
-- aiogram 3.3.0
-- SQLAlchemy 1.4.30
-- PostgreSQL (версия вашей установки)
-- aioschedule 0.8.0
+- aiogram 3.4.1
+- SQLAlchemy 2.0.28
+- PostgreSQL 14.11
+- aiohttp 3.9.3
+- aioschedule 0.5.2
 
 ### Запуск проекта локально 
 
