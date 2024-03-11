@@ -10,6 +10,8 @@ services:
       - .env
     depends_on:
       - db
+    networks:
+      - bot-network
   db:
     image: postgres:14.11
     restart: on-failure
@@ -17,10 +19,14 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DBNAME}
-    ports:
-      - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+    networks:
+      - bot-network
+
+networks:
+  bot-network:
+    driver: bridge
 
 volumes:
   pgdata:
